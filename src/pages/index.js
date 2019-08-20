@@ -1,7 +1,8 @@
 import React from "react"
 import { graphql } from "gatsby"
+import get from 'lodash/get';
 
-import Layout from "../components/layout"
+import Layout from "../components/Layout"
 import Gallery from "../components/Gallery"
 import FilterBar from "../components/FilterBar"
 
@@ -37,19 +38,34 @@ class IndexPage extends React.Component {
     )
   }
 
-  renderIndexPage = ({ fullHeader }) => (
-    <>
+  renderIndexPage = ({ fullHeader }) => {
+    const rawArt = get(this, 'props.data.allContentfulArt.nodes', []);
+    const transformedArt = this.transformResponse(rawArt);
+    const selectedArt = this.reduceImagesWithFilter(transformedArt)
+    return (
+      <>
       <div className={fullHeader ? "" : "hide-visibility"}>
         <FilterBar
           availabilityFilter={this.state.availabilityFilter}
           onChange={this.onChangeAvailability}
         />
       </div>
-      { !!this.props.images.length && <Gallery images={this.reduceImagesWithFilter(this.props.images)} /> }
+      <Gallery images={selectedArt} />
     </>
-  )
+    )
+  }
+
+  transformResponse = nodes => 
+    nodes.map( node => 
+      ({ 
+        src: `https:${get(node, 'images[0]file.url')}`,
+        forSale: node.forSale || false,
+        caption: get(node, 'description.content[0].content[0].value', '')
+      })
+    )
 
   render() {
+    console.log('this.props', this.props)
     return <Layout>{this.renderIndexPage}</Layout>
   }
 }
@@ -59,3 +75,31 @@ IndexPage.defaultProps = {
 }
 
 export default IndexPage
+
+export const pageQuery = graphql`
+  query HomeQuery {
+    allContentfulArt {
+      nodes {
+        title,
+        images {
+          file {
+            url
+            fileName
+            contentType
+          }
+        },
+        forSale,
+        description {
+          id,
+          content {
+            nodeType,
+            content {
+              value
+              nodeType
+            }
+          }
+        }
+      },
+    }
+  }
+`
