@@ -7,6 +7,7 @@
     "url": "https://github.com/contentful-userland/gatsby-contentful-starter/issues"
   },
   "dependencies": {
+    "@material-ui/core": "^4.3.2",
     "gatsby-image": "^2.0.38",
     "gatsby-plugin-react-helmet": "^3.0.12",
     "gatsby-plugin-sharp": "^2.0.34",
@@ -17,6 +18,8 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.0",
+    "react-images": "^1.0.0",
+    "react-photo-gallery": "^8.0.0",
     "sharp": "^0.22.0"
   },
   "devDependencies": {

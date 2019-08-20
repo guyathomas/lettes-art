@@ -1,0 +1,15 @@
+a.buy-now {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 14px;
+  background-color: #78b657;
+  padding: 8px 8px;
+  border-radius: 3px;
+  cursor: pointer;
+  border: 0;
+  line-height: 0px;
+  margin-bottom: 4px;
+  text-decoration: none;
+}

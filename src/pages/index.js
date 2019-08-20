@@ -1,89 +1,61 @@
-import React from 'react'
-import { graphql } from 'gatsby'
-import get from 'lodash/get'
-import Helmet from 'react-helmet'
-import Hero from '../components/hero'
-import Layout from '../components/layout'
-import ArticlePreview from '../components/article-preview'
+import React from "react"
+import { graphql } from "gatsby"
 
-class RootIndex extends React.Component {
-  render() {
-    const siteTitle = get(this, 'props.data.site.siteMetadata.title')
-    const posts = get(this, 'props.data.allContentfulBlogPost.edges')
-    const [author] = get(this, 'props.data.allContentfulPerson.edges')
+import Layout from "../components/layout"
+import Gallery from "../components/Gallery"
+import FilterBar from "../components/FilterBar"
 
-    return (
-      <Layout location={this.props.location} >
-        <div style={{ background: '#fff' }}>
-          <Helmet title={siteTitle} />
-          <Hero data={author.node} />
-          <div className="wrapper">
-            <h2 className="section-headline">Recent articles</h2>
-            <ul className="article-list">
-              {posts.map(({ node }) => {
-                return (
-                  <li key={node.slug}>
-                    <ArticlePreview article={node} />
-                  </li>
-                )
-              })}
-            </ul>
-          </div>
-        </div>
-      </Layout>
+import './index.css';
+// import Image from "../components/image"
+// import SEO from "../components/seo"
+
+// This query is executed at build time by Gatsby.
+
+// import images from "../images"
+import { AVAILABILITY } from "../constants"
+class IndexPage extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      availabilityFilter: AVAILABILITY.ALL,
+    }
+  }
+
+  onChangeAvailability = (event, value) =>
+    this.setState({ availabilityFilter: value })
+
+  reduceImagesWithFilter = (images) => {
+    if (this.state.availabilityFilter === AVAILABILITY.ALL) {
+      return images
+    }
+
+    return images.filter(
+      image =>
+        (this.state.availabilityFilter === AVAILABILITY.FOR_SALE &&
+          image.forSale) ||
+        (this.state.availabilityFilter === AVAILABILITY.SOLD && image.sold)
     )
+  }
+
+  renderIndexPage = ({ fullHeader }) => (
+    <>
+      <div className={fullHeader ? "" : "hide-visibility"}>
+        <FilterBar
+          availabilityFilter={this.state.availabilityFilter}
+          onChange={this.onChangeAvailability}
+        />
+      </div>
+      { !!this.props.images.length && <Gallery images={this.reduceImagesWithFilter(this.props.images)} /> }
+    </>
+  )
+
+  render() {
+    return <Layout>{this.renderIndexPage}</Layout>
   }
 }
 
-export default RootIndex
+IndexPage.defaultProps = {
+  images: [],
+}
 
-export const pageQuery = graphql`
-  query HomeQuery {
-    site {
-      siteMetadata {
-        title
-      }
-    }
-    allContentfulBlogPost(sort: { fields: [publishDate], order: DESC }) {
-      edges {
-        node {
-          title
-          slug
-          publishDate(formatString: "MMMM Do, YYYY")
-          tags
-          heroImage {
-            fluid(maxWidth: 350, maxHeight: 196, resizingBehavior: SCALE) {
-             ...GatsbyContentfulFluid_tracedSVG
-            }
-          }
-          description {
-            childMarkdownRemark {
-              html
-            }
-          }
-        }
-      }
-    }
-    allContentfulPerson(filter: { contentful_id: { eq: "15jwOBqpxqSAOy2eOO4S0m" } }) {
-      edges {
-        node {
-          name
-          shortBio {
-            shortBio
-          }
-          title
-          heroImage: image {
-            fluid(
-              maxWidth: 1180
-              maxHeight: 480
-              resizingBehavior: PAD
-              background: "rgb:000000"
-            ) {
-              ...GatsbyContentfulFluid_tracedSVG
-            }
-          }
-        }
-      }
-    }
-  }
-`
+export default IndexPage

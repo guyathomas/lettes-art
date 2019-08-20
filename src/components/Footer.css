@@ -1,0 +1,28 @@
+.footer-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.social-media-content {
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+    height: 100%;
+    align-items: center;
+}
+
+.social-media-item {
+    list-style: none;
+    padding-right: 10px;
+}
+
+.social-media-item img {
+    height: 40px;
+    width: 40px;
+}
+
+.brand-image {
+    height: 150px;
+    width: 150px;
+  }
