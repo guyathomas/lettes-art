@@ -7,13 +7,8 @@ import Gallery from "../components/Gallery"
 import FilterBar from "../components/FilterBar"
 
 import './index.css';
-// import Image from "../components/image"
-// import SEO from "../components/seo"
-
-// This query is executed at build time by Gatsby.
-
-// import images from "../images"
 import { AVAILABILITY } from "../constants"
+
 class IndexPage extends React.Component {
   constructor() {
     super()
