@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 import throttle from "lodash/throttle";
 import Header from "./Header";
 import Footer from "./Footer";
-import "./layout.css";
+import "./Layout.css";
 import { SHRINK_THRESHOLD } from "../constants";
 
 class Layout extends React.Component {
