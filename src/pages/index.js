@@ -32,9 +32,10 @@ class IndexPage extends React.Component {
 
     return images.filter(
       image =>
-        (this.state.availabilityFilter === AVAILABILITY.FOR_SALE &&
-          image.forSale) ||
-        (this.state.availabilityFilter === AVAILABILITY.SOLD && image.sold)
+        (
+          image.forSale 
+          && this.state.availabilityFilter === AVAILABILITY.FOR_SALE
+        )
     )
   }
 
@@ -60,12 +61,13 @@ class IndexPage extends React.Component {
       ({ 
         src: `https:${get(node, 'images[0]file.url')}`,
         forSale: node.forSale || false,
-        caption: get(node, 'description.content[0].content[0].value', '')
+        caption: get(node, 'description.content[0].content[0].value', ''),
+        // height: 400,
+        // width: 400,
       })
     )
 
   render() {
-    console.log('this.props', this.props)
     return <Layout>{this.renderIndexPage}</Layout>
   }
 }
@@ -85,7 +87,14 @@ export const pageQuery = graphql`
           file {
             url
             fileName
-            contentType
+            contentType,
+            details{
+              size,
+              image {
+                width
+                height
+              }
+            }
           }
         },
         forSale,

@@ -1,8 +1,7 @@
 export const SHRINK_THRESHOLD = 30;
 export const AVAILABILITY = {
   ALL: 0,
-  SOLD: 1,
-  FOR_SALE: 2,
+  FOR_SALE: 1,
 };
 
 export const EMAIL = {

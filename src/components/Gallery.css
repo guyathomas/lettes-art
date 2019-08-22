@@ -13,3 +13,7 @@ a.buy-now {
   margin-bottom: 4px;
   text-decoration: none;
 }
+
+.react-photo-gallery--gallery > div {
+  justify-content: center;
+}

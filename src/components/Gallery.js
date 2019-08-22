@@ -33,7 +33,7 @@ const Gallery = ({ images = [] }) => {
   }, [])
 
   return (
-    <div>
+    <>
       <ReactPhotoGallery photos={images} onClick={openLightbox} />
       <ModalGateway>
         {viewerIsOpen ? (
@@ -49,7 +49,7 @@ const Gallery = ({ images = [] }) => {
           </Modal>
         ) : null}
       </ModalGateway>
-    </div>
+    </>
   )
 }
 

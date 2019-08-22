@@ -24,7 +24,6 @@ class FilterBar extends React.Component {
         centered
       >
         <Tab label="All" />
-        <Tab label="Sold" />
         <Tab label="For Sale" />
       </Tabs>
     );
