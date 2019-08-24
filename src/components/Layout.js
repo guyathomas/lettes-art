@@ -47,8 +47,8 @@ const Layout = ({ children = null }) => {
         <LayoutContext.Provider value={{ aboveShrinkThreshold }}>
           {children}
         </LayoutContext.Provider>
+        <Footer />
       </main>
-      {/* <Footer /> */}
     </>
   )
 }
