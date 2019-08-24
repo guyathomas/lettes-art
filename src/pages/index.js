@@ -25,7 +25,8 @@ const transformResponse = nodes =>
     src: `https:${get(node, 'images[0]file.url')}`,
     forSale: node.forSale || false,
     caption: get(node, 'description.content[0].content[0].value', ''),
-    ...get(node, 'images[0].file.details.image', {}), // height, width
+    width: get(node, 'images[0].file.details.image.width'),
+    height: get(node, 'images[0].file.details.image.height')
   }))
 
 const IndexPage = (props) => {
