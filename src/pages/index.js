@@ -1,8 +1,8 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useMemo } from 'react'
 import { graphql } from 'gatsby'
 import get from 'lodash/get'
 
-import Layout, { LayoutContext } from '../components/Layout'
+import Layout from '../components/Layout'
 import Gallery from '../components/Gallery'
 import FilterBar from '../components/FilterBar'
 
@@ -25,8 +25,7 @@ const transformResponse = nodes =>
     src: `https:${get(node, 'images[0]file.url')}`,
     forSale: node.forSale || false,
     caption: get(node, 'description.content[0].content[0].value', ''),
-    // height: 400,
-    // width: 400,
+    ...get(node, 'images[0].file.details.image', {}), // height, width
   }))
 
 const IndexPage = (props) => {
@@ -34,8 +33,9 @@ const IndexPage = (props) => {
   const onChangeAvailability = (event, value) => setAvailabilityFilter(value)
 
   const rawArt = get(props, 'data.allContentfulArt.nodes', [])
-  const transformedArt = transformResponse(rawArt)
-  const selectedArt = reduceImagesWithFilter(transformedArt, availabilityFilter)
+  const selectedArt = useMemo(() => {
+    return reduceImagesWithFilter(transformResponse(rawArt), availabilityFilter)
+  }, [rawArt, availabilityFilter ])
 
   return (
     <Layout>

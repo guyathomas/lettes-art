@@ -24,14 +24,7 @@ const Gallery = ({ images = [] }) => {
       <ModalGateway>
         {viewerIsOpen ? (
           <Modal onClose={closeLightbox}>
-            <Carousel
-              backdropClosesModal
-              currentIndex={currentImage}
-              views={images.map(x => ({
-                ...x,
-                caption: x.title,
-              }))}
-            />
+            <Carousel backdropClosesModal currentIndex={currentImage} />
           </Modal>
         ) : null}
       </ModalGateway>
