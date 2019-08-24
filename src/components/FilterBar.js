@@ -1,24 +1,21 @@
-import React from "react";
-import PropTypes from "prop-types";
-import noop from "lodash/noop";
-import Tab from "@material-ui/core/Tab";
-import Tabs from "@material-ui/core/Tabs";
+import React, { useContext } from 'react'
+import noop from 'lodash/noop'
+import Tab from '@material-ui/core/Tab'
+import Tabs from '@material-ui/core/Tabs'
 
-class FilterBar extends React.Component {
-  static defaultProps = {
-    onChange: noop
-  };
+import { LayoutContext } from '../components/Layout';
+import { AVAILABILITY } from '../constants'
 
-  static propTypes = {
-    onChange: PropTypes.func,
-    availabilityFilter: PropTypes.object.isRequired
-  };
-
-  render() {
-    return (
+const FilterBar = ({
+  availabilityFilter = AVAILABILITY.ALL,
+  onChange = noop,
+}) => {
+  const { aboveShrinkThreshold } = useContext(LayoutContext)
+  return (
+    <div className={aboveShrinkThreshold ? '' : 'hide-visibility'}>
       <Tabs
-        value={this.props.availabilityFilter}
-        onChange={this.props.onChange}
+        value={availabilityFilter}
+        onChange={onChange}
         indicatorColor="primary"
         textColor="primary"
         centered
@@ -26,8 +23,8 @@ class FilterBar extends React.Component {
         <Tab label="All" />
         <Tab label="For Sale" />
       </Tabs>
-    );
-  }
+    </div>
+  )
 }
 
-export default FilterBar;
+export default FilterBar

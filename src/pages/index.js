@@ -1,109 +1,85 @@
-import React from "react"
-import { graphql } from "gatsby"
-import get from 'lodash/get';
+import React, { useState, useContext } from 'react'
+import { graphql } from 'gatsby'
+import get from 'lodash/get'
 
-import Layout from "../components/Layout"
-import Gallery from "../components/Gallery"
-import FilterBar from "../components/FilterBar"
+import Layout, { LayoutContext } from '../components/Layout'
+import Gallery from '../components/Gallery'
+import FilterBar from '../components/FilterBar'
 
-import './index.css';
-import { AVAILABILITY } from "../constants"
+import './index.css'
+import { AVAILABILITY } from '../constants'
 
-class IndexPage extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      availabilityFilter: AVAILABILITY.ALL,
-    }
+const reduceImagesWithFilter = (images, availabilityFilter) => {
+  if (availabilityFilter === AVAILABILITY.ALL) {
+    return images
   }
 
-  onChangeAvailability = (event, value) =>
-    this.setState({ availabilityFilter: value })
+  return images.filter(
+    image =>
+      image.forSale && availabilityFilter === AVAILABILITY.FOR_SALE
+  )
+}
 
-  reduceImagesWithFilter = (images) => {
-    if (this.state.availabilityFilter === AVAILABILITY.ALL) {
-      return images
-    }
+const transformResponse = nodes =>
+  nodes.map(node => ({
+    src: `https:${get(node, 'images[0]file.url')}`,
+    forSale: node.forSale || false,
+    caption: get(node, 'description.content[0].content[0].value', ''),
+    // height: 400,
+    // width: 400,
+  }))
 
-    return images.filter(
-      image =>
-        (
-          image.forSale 
-          && this.state.availabilityFilter === AVAILABILITY.FOR_SALE
-        )
-    )
-  }
+const IndexPage = (props) => {
+  const [availabilityFilter, setAvailabilityFilter] = useState(AVAILABILITY.ALL)
+  const onChangeAvailability = (event, value) => setAvailabilityFilter(value)
 
-  renderIndexPage = ({ fullHeader }) => {
-    const rawArt = get(this, 'props.data.allContentfulArt.nodes', []);
-    const transformedArt = this.transformResponse(rawArt);
-    const selectedArt = this.reduceImagesWithFilter(transformedArt)
-    return (
-      <>
-      <div className={fullHeader ? "" : "hide-visibility"}>
-        <FilterBar
-          availabilityFilter={this.state.availabilityFilter}
-          onChange={this.onChangeAvailability}
-        />
-      </div>
+  const rawArt = get(props, 'data.allContentfulArt.nodes', [])
+  const transformedArt = transformResponse(rawArt)
+  const selectedArt = reduceImagesWithFilter(transformedArt, availabilityFilter)
+
+  return (
+    <Layout>
+      <FilterBar
+        availabilityFilter={availabilityFilter}
+        onChange={onChangeAvailability}
+      />
       <Gallery images={selectedArt} />
-    </>
-    )
-  }
-
-  transformResponse = nodes => 
-    nodes.map( node => 
-      ({ 
-        src: `https:${get(node, 'images[0]file.url')}`,
-        forSale: node.forSale || false,
-        caption: get(node, 'description.content[0].content[0].value', ''),
-        // height: 400,
-        // width: 400,
-      })
-    )
-
-  render() {
-    return <Layout>{this.renderIndexPage}</Layout>
-  }
+    </Layout>
+  )
 }
-
-IndexPage.defaultProps = {
-  images: [],
-}
-
 export default IndexPage
 
 export const pageQuery = graphql`
   query HomeQuery {
     allContentfulArt {
       nodes {
-        title,
+        title
         images {
           file {
             url
             fileName
-            contentType,
-            details{
-              size,
+            contentType
+            details {
+              size
               image {
                 width
                 height
               }
             }
           }
-        },
-        forSale,
+        }
+        forSale
         description {
-          id,
+          id
           content {
-            nodeType,
+            nodeType
             content {
               value
               nodeType
             }
           }
         }
-      },
+      }
     }
   }
 `

@@ -5,66 +5,52 @@
  * See: https://www.gatsbyjs.org/docs/static-query/
  */
 
-import React from "react";
-import PropTypes from "prop-types";
-import throttle from "lodash/throttle";
-import Header from "./Header";
-import Footer from "./Footer";
-import "./Layout.css";
-import { SHRINK_THRESHOLD } from "../constants";
+import React, { useEffect, useCallback, useState, createContext } from 'react'
+import throttle from 'lodash/throttle'
 
-class Layout extends React.Component {
-  static propTypes = {
-    children: PropTypes.func,
-  }
+import Header from './Header'
+import Footer from './Footer'
+import './Layout.css'
+import { SHRINK_THRESHOLD } from '../constants'
 
-  static defaultProps = {
-    children: () => null,
-  }
+export const LayoutContext = createContext({})
 
-  constructor() {
-    super()
-    this.state = {
-      fullHeader: true,
-      scrollPosition: 0,
-      headerHeight: 0,
-    }
-  }
+const Layout = ({ children = null }) => {
+  const [headerHeight, setHeaderHeight] = useState(0)
+  const [aboveShrinkThreshold, setAboveShrinkThreshold] = useState(true)
 
-  componentDidMount() {
-    const headerEl = document.querySelector('header') || {};
-    const headerHeight = headerEl.clientHeight || headerEl.offsetHeight;
-    window.addEventListener("scroll", this.throttledScroll);
-    this.setState({ headerHeight });
-  }
+  // useCallback to maintain reference to the same throttled function for removing its listener
+  const onScroll = useCallback(
+    throttle(() => {
+      const aboveShrinkThreshold = window.scrollY <= SHRINK_THRESHOLD
+      setAboveShrinkThreshold(aboveShrinkThreshold)
+    }, 100),
+    []
+  )
 
-  componentWillUnmount() {
-    window.removeEventListener("scroll", this.throttledScroll);
-  }
+  useEffect(() => {
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
-  onScroll = () => {
-    if (window.scrollY >= SHRINK_THRESHOLD) {
-      this.setState({ fullHeader: false });
-    } else if (window.scrollY <= SHRINK_THRESHOLD) {
-      this.setState({ fullHeader: true });
-    }
+  useEffect(() => {
+    const headerEl = document.querySelector('header') || {}
+    const calculatedHeaderHeight =
+      headerEl.clientHeight || headerEl.offsetHeight
+    setHeaderHeight(calculatedHeaderHeight)
+  }, [])
 
-    this.setState({ scrollPosition: window.scrollY });
-  };
-
-  throttledScroll = throttle(this.onScroll, 100);
-
-  render() {
-    return (
-      <>
-        <Header fullHeader={ this.state.fullHeader } />
-        <main className="main-container" style={{ top: this.state.headerHeight }} >
-          { this.props.children( this.state ) }
-        </main>
-        <Footer />
-      </>
-    )
-  }
+  return (
+    <>
+      <Header fullHeader={aboveShrinkThreshold} />
+      <main className="main-container" style={{ top: headerHeight }}>
+        <LayoutContext.Provider value={{ aboveShrinkThreshold }}>
+          {children}
+        </LayoutContext.Provider>
+      </main>
+      {/* <Footer /> */}
+    </>
+  )
 }
 
 export default Layout
