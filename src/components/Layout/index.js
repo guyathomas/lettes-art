@@ -8,14 +8,15 @@
 import React, { useEffect, useCallback, useState, createContext } from 'react'
 import throttle from 'lodash/throttle'
 
-import Header from './Header'
-import Footer from './Footer'
+import { Header } from 'components/Header'
+import { Footer } from 'components/Footer'
+
+import { SHRINK_THRESHOLD } from './constants'
 import './Layout.css'
-import { SHRINK_THRESHOLD } from '../constants'
 
 export const LayoutContext = createContext({})
 
-const Layout = ({ children = null }) => {
+export const Layout = ({ children = null }) => {
   const [headerHeight, setHeaderHeight] = useState(0)
   const [aboveShrinkThreshold, setAboveShrinkThreshold] = useState(true)
 
@@ -52,5 +53,3 @@ const Layout = ({ children = null }) => {
     </>
   )
 }
-
-export default Layout

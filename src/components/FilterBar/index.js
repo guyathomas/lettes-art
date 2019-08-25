@@ -3,10 +3,10 @@ import noop from 'lodash/noop'
 import Tab from '@material-ui/core/Tab'
 import Tabs from '@material-ui/core/Tabs'
 
-import { LayoutContext } from '../components/Layout';
-import { AVAILABILITY } from '../constants'
+import { LayoutContext } from 'components/Layout';
+import { AVAILABILITY } from '../../constants'
 
-const FilterBar = ({
+export const FilterBar = ({
   availabilityFilter = AVAILABILITY.ALL,
   onChange = noop,
 }) => {
@@ -26,5 +26,3 @@ const FilterBar = ({
     </div>
   )
 }
-
-export default FilterBar

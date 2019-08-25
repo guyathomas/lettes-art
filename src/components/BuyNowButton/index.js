@@ -1,6 +1,6 @@
 import React from 'react'
 
-const BuyNowButton = ({ show = false, imageURL }) =>
+export const BuyNowButton = ({ show = false, imageURL }) =>
   show ? (
     <a
       target="_blank"
@@ -12,5 +12,3 @@ const BuyNowButton = ({ show = false, imageURL }) =>
       Buy Now
     </a>
   ) : null
-
-export default BuyNowButton

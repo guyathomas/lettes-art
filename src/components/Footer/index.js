@@ -1,7 +1,8 @@
 import React from 'react'
+
 import './Footer.css'
 
-const Footer = () => (
+export const Footer = () => (
   <footer className="footer-container">
     <ul className="social-media-content">
       <li className="social-media-item">
@@ -20,5 +21,3 @@ const Footer = () => (
     </ul>
   </footer>
 )
-
-export default Footer

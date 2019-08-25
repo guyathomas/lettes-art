@@ -4,7 +4,7 @@ import Carousel, { Modal, ModalGateway } from 'react-images'
 
 import './Gallery.css'
 
-const Gallery = ({ images = [] }) => {
+export const Gallery = ({ images = [] }) => {
   const [currentImage, setCurrentImage] = useState(0)
   const [viewerIsOpen, setViewerIsOpen] = useState(false)
 
@@ -31,5 +31,3 @@ const Gallery = ({ images = [] }) => {
     </>
   )
 }
-
-export default Gallery
