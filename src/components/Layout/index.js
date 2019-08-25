@@ -5,7 +5,7 @@
  * See: https://www.gatsbyjs.org/docs/static-query/
  */
 
-import React, { useEffect, useCallback, useState, createContext } from 'react'
+import React, { useEffect, useState, createContext } from 'react'
 import throttle from 'lodash/throttle'
 
 import { Header } from 'components/Header'
@@ -20,16 +20,12 @@ export const Layout = ({ children = null }) => {
   const [headerHeight, setHeaderHeight] = useState(0)
   const [aboveShrinkThreshold, setAboveShrinkThreshold] = useState(true)
 
-  // useCallback to maintain reference to the same throttled function for removing its listener
-  const onScroll = useCallback(
-    throttle(() => {
+  useEffect(() => {
+    const onScroll = throttle(() => {
       const aboveShrinkThreshold = window.scrollY <= SHRINK_THRESHOLD
       setAboveShrinkThreshold(aboveShrinkThreshold)
-    }, 100),
-    []
-  )
+    }, 100)
 
-  useEffect(() => {
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
