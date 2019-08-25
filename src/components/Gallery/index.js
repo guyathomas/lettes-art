@@ -33,7 +33,6 @@ export const Gallery = ({ images = [] }) => {
         {viewerIsOpen ? (
           <Modal onClose={closeLightbox}>
             <Carousel
-              backdropClosesModal
               currentIndex={currentImage}
               views={images}
             />

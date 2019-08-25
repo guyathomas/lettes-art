@@ -7,7 +7,7 @@ import { LayoutContext } from 'components/Layout';
 import { AVAILABILITY } from '../../constants'
 
 export const FilterBar = ({
-  availabilityFilter = AVAILABILITY.ALL,
+  availabilityFilter = AVAILABILITY.FOR_SALE,
   onChange = noop,
 }) => {
   const { aboveShrinkThreshold } = useContext(LayoutContext)
@@ -20,8 +20,8 @@ export const FilterBar = ({
         textColor="primary"
         centered
       >
-        <Tab label="All" />
         <Tab label="For Sale" />
+        <Tab label="Gallery" />
       </Tabs>
     </div>
   )

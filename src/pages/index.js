@@ -29,7 +29,7 @@ const transformResponse = nodes =>
   }))
 
 const IndexPage = props => {
-  const [availabilityFilter, setAvailabilityFilter] = useState(AVAILABILITY.ALL)
+  const [availabilityFilter, setAvailabilityFilter] = useState(AVAILABILITY.FOR_SALE)
   const onChangeAvailability = (event, value) => setAvailabilityFilter(value)
 
   const rawArt = get(props, 'data.allContentfulArt.nodes', [])
