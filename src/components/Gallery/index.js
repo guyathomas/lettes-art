@@ -8,7 +8,7 @@ export const Gallery = ({ images = [] }) => {
   const [currentImage, setCurrentImage] = useState(0)
   const [viewerIsOpen, setViewerIsOpen] = useState(false)
 
-  const openLightbox = (event, { image, index }) => {
+  const openLightbox = (event, { index }) => {
     setCurrentImage(index)
     setViewerIsOpen(true)
   }
@@ -18,13 +18,25 @@ export const Gallery = ({ images = [] }) => {
     setViewerIsOpen(false)
   }
 
+  if (!images.length){
+    return null;
+  }
+
   return (
     <>
-      <ReactPhotoGallery photos={images} onClick={openLightbox} />
+      <ReactPhotoGallery
+        photos={images}
+        onClick={openLightbox}
+        direction="column"
+      />
       <ModalGateway>
         {viewerIsOpen ? (
           <Modal onClose={closeLightbox}>
-            <Carousel backdropClosesModal currentIndex={currentImage} />
+            <Carousel
+              backdropClosesModal
+              currentIndex={currentImage}
+              views={images}
+            />
           </Modal>
         ) : null}
       </ModalGateway>
