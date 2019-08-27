@@ -14,12 +14,12 @@ export const Gallery = ({ images = [] }) => {
   }
 
   const closeLightbox = () => {
-    setCurrentImage(0)
     setViewerIsOpen(false)
+    setCurrentImage(0)
   }
 
-  if (!images.length){
-    return null;
+  if (!images.length) {
+    return null
   }
 
   return (
@@ -33,8 +33,9 @@ export const Gallery = ({ images = [] }) => {
         {viewerIsOpen ? (
           <Modal onClose={closeLightbox}>
             <Carousel
+              backdropClosesModal
               currentIndex={currentImage}
-              views={images}
+              views={images.map(image => ({ src: image.src }))}
             />
           </Modal>
         ) : null}
