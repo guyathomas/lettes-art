@@ -1,6 +1,6 @@
 ## Introduce
 - [x] Show Name & Description, Frame, height, width
-- [ ] Style width, height and frame details, and Name and description
+- [x] Style width, height and frame details, and Name and description
 - [ ] Add 'Commissions Welcome' banner down the bottom
 - [ ] Buy Now Button
 - [ ] Use lower quality images on page load / paginate
