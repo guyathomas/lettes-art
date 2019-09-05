@@ -1,9 +1,12 @@
 ## Introduce
+- [x] Show Name & Description, Frame, height, width
+- [ ] Style width, height and frame details, and Name and description
+- [ ] Add 'Commissions Welcome' banner down the bottom
+- [ ] Buy Now Button
+- [ ] Use lower quality images on page load / paginate
+- [ ] Multiple photos
 - [ ] Typescript
 - [ ] Emotion
 - [ ] CSS Grid?
-- [ ] Buy Now Button
 - [ ] Enhance design
 - [ ] Netlify CMS instead?
-- [ ] Multiple photos
-- [ ] Add name / description

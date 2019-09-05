@@ -15,17 +15,25 @@ const reduceImagesWithFilter = (images, availabilityFilter) => {
   }
 
   return images.filter(
-    image => image.forSale && availabilityFilter === AVAILABILITY.FOR_SALE
+    image => image.art.forSale && availabilityFilter === AVAILABILITY.FOR_SALE
   )
 }
 
 const transformResponse = nodes =>
   nodes.map(node => ({
-    src: `https:${get(node, 'images[0]file.url')}`,
-    forSale: node.forSale || false,
-    caption: get(node, 'description.content[0].content[0].value', ''),
-    width: get(node, 'images[0].file.details.image.width'),
-    height: get(node, 'images[0].file.details.image.height'),
+    art: {
+      caption: get(node, 'caption.content[0].content[0].value'),
+      height: node.artHeight,
+      width: node.artWidth,
+      frame: node.frame,
+      forSale: node.forSale || false,
+      title: node.title,
+    },
+    image: {
+      src: `https:${get(node, 'images[0]file.url')}`,
+      width: get(node, 'images[0].file.details.image.width'),
+      height: get(node, 'images[0].file.details.image.height'),
+    }
   }))
 
 const IndexPage = props => {
@@ -36,7 +44,6 @@ const IndexPage = props => {
   const selectedArt = useMemo(() => {
     return reduceImagesWithFilter(transformResponse(rawArt), availabilityFilter)
   }, [rawArt, availabilityFilter])
-
   return (
     <Layout>
       <FilterBar
@@ -68,8 +75,11 @@ export const pageQuery = graphql`
             }
           }
         }
+        artHeight
+        artWidth
+        frame
         forSale
-        description {
+        caption {
           id
           content {
             nodeType
