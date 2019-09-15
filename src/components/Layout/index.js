@@ -24,6 +24,12 @@ export const Layout = ({ children = null }) => {
   const scrollToMain = () => zenscroll.to(mainEl.current)
 
   useEffect(() => {
+    const vh = window.innerHeight * 0.01;
+    // Set VH CSS variable so that 100vh will take mobile nav bars into consideration
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  }, [])
+
+  useEffect(() => {
     const onScroll = throttle(() => {
 
       const headerThreshold = zenscroll.getTopOf(headerEl.current);
