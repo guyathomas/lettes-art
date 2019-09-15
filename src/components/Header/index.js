@@ -4,7 +4,7 @@ import hero from 'images/hero.png';
 
 import './Header.css'
 
-export const Header = () => (
+export const Header = ({ useSmallHeader }) => (
   <header className='header-container'>
       <h1>Lettes Art</h1>
       <img src={hero} />
