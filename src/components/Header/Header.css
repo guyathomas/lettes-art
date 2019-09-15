@@ -13,6 +13,8 @@
   align-items: center;
   width: 100%;
   overflow: hidden;
+  background-size: cover;
+  background-position: right center;
 }
 
 .header-contents .header-wrapper {
@@ -43,8 +45,4 @@
   background: none;
   border: none;
   outline: none;
-}
-
-.next-section-button img {
-  height: 100%;
 }
