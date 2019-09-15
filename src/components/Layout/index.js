@@ -18,18 +18,23 @@ export const Layout = ({ children = null }) => {
   const mainEl = useRef(null);
   let previousScrollY = 0;
 
+  const scrollToMain = () => window.scrollTo({ top: mainEl.current.offsetTop, left: 0, behavior: 'smooth' })
+
   useEffect(() => {
     const onScroll = () => {
+      const headerThreshold = headerEl.current.offsetTop;
+      const mainThreshold = mainEl.current.offsetTop - 50;
+
       if ( 
         window.scrollY > previousScrollY && // Scrolling down
-        previousScrollY <= headerEl.current.offsetTop && // Was above the header
-        window.scrollY > headerEl.current.offsetTop // And now below the header
+        previousScrollY <= headerThreshold && // Was above the header
+        window.scrollY > headerThreshold // And now below the header
       ) { 
-        window.scrollTo({ top: mainEl.current.offsetTop, left: 0, behavior: 'smooth' })
+        scrollToMain();
       } else if (
         window.scrollY < previousScrollY && // Scrolling up
-        previousScrollY >= mainEl.current.offsetTop && // Was below the main
-        window.scrollY < mainEl.current.offsetTop // And now above the main
+        previousScrollY >= mainThreshold && // Was below the main
+        window.scrollY < mainThreshold // And now above the main
       ) {
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
       }
@@ -42,7 +47,7 @@ export const Layout = ({ children = null }) => {
 
   return (
     <>
-      <Header ref={headerEl} />
+      <Header ref={headerEl} onChevronClick={ scrollToMain } />
       <main ref={mainEl} className="main-container">{children}</main>
       <Footer />
     </>
