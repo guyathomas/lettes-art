@@ -1,1 +1,0 @@
-export const SHRINK_THRESHOLD = 30;

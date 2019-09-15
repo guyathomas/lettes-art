@@ -1,11 +1,12 @@
 import React from 'react'
 
+import hero from 'images/hero.png';
+
 import './Header.css'
 
-export const Header = ({ fullHeader = true }) => (
-  <header className={`header-container ${fullHeader ? '' : 'small'}`}>
-    <div className="header-titles">
+export const Header = () => (
+  <header className='header-container'>
       <h1>Lettes Art</h1>
-    </div>
+      <img src={hero} />
   </header>
 )
