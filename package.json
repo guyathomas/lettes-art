@@ -20,7 +20,8 @@
     "react-helmet": "^5.2.0",
     "react-images": "https://github.com/guyathomas/react-images/tarball/patch-backdrop-bug",
     "react-photo-gallery": "^8.0.0",
-    "sharp": "^0.22.0"
+    "sharp": "^0.22.0",
+    "zenscroll": "^4.0.2"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",

@@ -5,7 +5,8 @@
  * See: https://www.gatsbyjs.org/docs/static-query/
  */
 
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
+import zenscroll from 'zenscroll'
 import throttle from 'lodash/throttle'
 
 import { Header } from 'components/Header'
@@ -13,33 +14,37 @@ import { Footer } from 'components/Footer'
 
 import './Layout.css'
 
+zenscroll.setup(null, 0)
+
 export const Layout = ({ children = null }) => {
   const headerEl = useRef(null);
   const mainEl = useRef(null);
   let previousScrollY = 0;
 
-  const scrollToMain = () => window.scrollTo({ top: mainEl.current.offsetTop, left: 0, behavior: 'smooth' })
+  const scrollToMain = () => zenscroll.to(mainEl.current)
 
   useEffect(() => {
-    const onScroll = () => {
-      const headerThreshold = headerEl.current.offsetTop;
-      const mainThreshold = mainEl.current.offsetTop - 50;
+    const onScroll = throttle(() => {
 
+      const headerThreshold = zenscroll.getTopOf(headerEl.current);
+      const mainThreshold = zenscroll.getTopOf(mainEl.current) - 50;
+      const scrollPosition = zenscroll.getY();
+      
       if ( 
-        window.scrollY > previousScrollY && // Scrolling down
+        scrollPosition > previousScrollY && // Scrolling down
         previousScrollY <= headerThreshold && // Was above the header
-        window.scrollY > headerThreshold // And now below the header
+        scrollPosition > headerThreshold // And now below the header
       ) { 
         scrollToMain();
       } else if (
-        window.scrollY < previousScrollY && // Scrolling up
+        scrollPosition < previousScrollY && // Scrolling up
         previousScrollY >= mainThreshold && // Was below the main
-        window.scrollY < mainThreshold // And now above the main
-      ) {
-        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+        scrollPosition < mainThreshold // And now above the main
+        ) {
+        zenscroll.toY(0)
       }
       previousScrollY = window.scrollY;
-    }
+    }, 100)
 
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
