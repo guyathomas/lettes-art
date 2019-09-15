@@ -22,12 +22,13 @@
 
 .header-contents img {
   object-fit: cover;
+  height: 100%;
   right: 0;
 }
 
 .next-section-button {
   position: absolute;
-  bottom: 5rem;
+  bottom: 3rem;
   height: 50px;
   cursor: pointer;
   /* Resets */
