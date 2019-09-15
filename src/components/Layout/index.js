@@ -6,6 +6,8 @@
  */
 
 import React, { useEffect, useRef } from 'react'
+import { Helmet } from "react-helmet"
+
 import zenscroll from 'zenscroll'
 import throttle from 'lodash/throttle'
 
@@ -43,7 +45,7 @@ export const Layout = ({ children = null }) => {
       }
       previousScrollY = window.scrollY;
     }, 100)
-    
+
     zenscroll.setup(null, 0)
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
@@ -51,6 +53,10 @@ export const Layout = ({ children = null }) => {
 
   return (
     <>
+      <Helmet>
+        <meta charSet="utf-8" name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0" />
+        <title>Lettes Art</title>
+      </Helmet>
       <Header ref={headerEl} onChevronClick={ scrollToMain } />
       <main ref={mainEl} className="main-container">{children}</main>
       <Footer />

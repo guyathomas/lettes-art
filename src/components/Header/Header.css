@@ -7,7 +7,6 @@
 
 .header-contents {
   max-width: 960px;
-  position: relative;
   display: flex;
   justify-content: center;
 }
@@ -22,14 +21,13 @@
 }
 
 .header-contents img {
-  height: 100%;
   object-fit: cover;
   right: 0;
 }
 
 .next-section-button {
   position: absolute;
-  bottom: 3rem;
+  bottom: 5rem;
   height: 50px;
   cursor: pointer;
   /* Resets */
