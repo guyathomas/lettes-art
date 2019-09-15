@@ -16,7 +16,7 @@
 
 .header-contents .header-wrapper {
   position: absolute;
-  margin: 1rem 0 0 2rem;
+  margin: 1rem 0 0 1rem;
   align-self: flex-start;
 }
 
@@ -28,7 +28,6 @@
 }
 
 .header-contents img {
-  object-fit: cover;
   height: 100%;
 }
 
