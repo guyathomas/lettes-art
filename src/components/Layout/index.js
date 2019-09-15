@@ -20,7 +20,7 @@ export const Layout = ({ children = null }) => {
   const headerEl = useRef(null);
   const mainEl = useRef(null);
   let previousScrollY = 0;
-
+  
   const scrollToMain = () => zenscroll.to(mainEl.current)
 
   useEffect(() => {
