@@ -5,7 +5,7 @@
  * See: https://www.gatsbyjs.org/docs/static-query/
  */
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import throttle from 'lodash/throttle'
 
 import { Header } from 'components/Header'
@@ -14,27 +14,36 @@ import { Footer } from 'components/Footer'
 import './Layout.css'
 
 export const Layout = ({ children = null }) => {
-  const [scrollHeight, setScrollHeight] = useState(0)
-  let distanceToActivateSmallHeader;
+  const headerEl = useRef(null);
+  const mainEl = useRef(null);
+  let previousScrollY = 0;
 
   useEffect(() => {
-    const onScroll = throttle(() => {
-      setScrollHeight(window.scrollY)
-    }, 100)
+    const onScroll = () => {
+      if ( 
+        window.scrollY > previousScrollY && // Scrolling down
+        previousScrollY <= headerEl.current.offsetTop && // Was above the header
+        window.scrollY > headerEl.current.offsetTop // And now below the header
+      ) { 
+        window.scrollTo({ top: mainEl.current.offsetTop, left: 0, behavior: 'smooth' })
+      } else if (
+        window.scrollY < previousScrollY && // Scrolling up
+        previousScrollY >= mainEl.current.offsetTop && // Was below the main
+        window.scrollY < mainEl.current.offsetTop // And now above the main
+      ) {
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+      }
+      previousScrollY = window.scrollY;
+    }
 
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  if (!distanceToActivateSmallHeader){
-    const headerEl = document.querySelector('header h1') || {}
-    distanceToActivateSmallHeader = headerEl.offsetTop || ( headerEl.getBoundingRect && headerEl.getBoundingRect().top ) || 48;
-  }
-
   return (
     <>
-      <Header useSmallHeader={scrollHeight >= distanceToActivateSmallHeader} />
-      <main className="main-container">{children}</main>
+      <Header ref={headerEl} />
+      <main ref={mainEl} className="main-container">{children}</main>
       <Footer />
     </>
   )

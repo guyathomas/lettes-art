@@ -1,12 +1,16 @@
 .header-container {
-  transition: all 0.4s ease;
+  display: flex;
+  justify-content: center;
   height: 100vh;
   width: 100vw;
-  max-width: 960px;
   overflow: hidden;
 }
 
-.header-container h1 {
+.header-contents {
+  max-width: 960px;
+}
+
+.header-contents h1 {
   font-family: 'Dancing Script', cursive;
   font-weight: 500;
   margin: 0;
@@ -15,8 +19,9 @@
   font-size: 3rem;
 }
 
-.header-container img {
+.header-contents img {
   height: 100%;
+  width: 100%;
   object-fit: cover;
   right: 0;
 }
