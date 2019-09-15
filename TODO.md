@@ -1,6 +1,7 @@
 ## Introduce
 - [x] Show Name & Description, Frame, height, width
 - [x] Style width, height and frame details, and Name and description
+- [ ] Hover state for SVG down chevron
 - [ ] Add 'Commissions Welcome' banner down the bottom
 - [ ] Buy Now Button
 - [ ] Use lower quality images on page load / paginate

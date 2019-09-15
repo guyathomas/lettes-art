@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import hero from 'images/hero.png';
 import downChevron from 'svg/down-chevron.svg';
