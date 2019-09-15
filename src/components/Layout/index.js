@@ -14,8 +14,6 @@ import { Footer } from 'components/Footer'
 
 import './Layout.css'
 
-zenscroll.setup(null, 0)
-
 export const Layout = ({ children = null }) => {
   const headerEl = useRef(null);
   const mainEl = useRef(null);
@@ -45,7 +43,8 @@ export const Layout = ({ children = null }) => {
       }
       previousScrollY = window.scrollY;
     }, 100)
-
+    
+    zenscroll.setup(null, 0)
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
