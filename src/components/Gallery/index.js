@@ -36,7 +36,8 @@ export const Gallery = ({ images = [] }) => {
     () =>
       images.map(({ image, ...rest }) => ({
         ...image,
-        ...rest
+        src: `${image.src}?w=500`,
+        ...rest,
       })),
     [images]
   )
