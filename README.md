@@ -41,12 +41,15 @@ Removes all dependencies, scripts and data from the installation script.
 - [x] Show Name & Description, Frame, height, width
 - [x] Style width, height and frame details, and Name and description
 - [ ] Hover state for SVG down chevron
+- [ ] Move to new 'card' based design
 - [ ] Multiple photos
-- [ ] Use lower quality images on page load / paginate
+- [ ] Paginate / Lazy load images not yet visible
 
 ### P2
 - [ ] Add 'Commissions Welcome' banner down the bottom
 - [ ] Buy Now Button ( Allow Prints on demand )
+- [ ] Browser doesn't seem to cache the full sized images that it loads
+- [ ] SEO
 
 ### Refactors
 - [ ] Typescript

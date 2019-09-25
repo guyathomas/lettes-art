@@ -2,7 +2,7 @@ import React, { useState, useMemo, useCallback } from 'react'
 import ReactPhotoGallery from 'react-photo-gallery'
 import Carousel, { Modal, ModalGateway } from 'react-images'
 
-import { PhotoWithHoverOverlay } from './PhotoWithHoverOverlay';
+import { PhotoWithHoverOverlay } from './PhotoWithHoverOverlay'
 import { FooterCaption } from './FooterCaption'
 import './Gallery.css'
 
@@ -42,9 +42,9 @@ export const Gallery = ({ images = [] }) => {
     [images]
   )
 
-  const onViewChange = useCallback((viewIndex) => { 
-    setCurrentImage(viewIndex);
-  }, []);
+  const onViewChange = useCallback(viewIndex => {
+    setCurrentImage(viewIndex)
+  }, [])
   return (
     <>
       <ReactPhotoGallery
@@ -60,7 +60,7 @@ export const Gallery = ({ images = [] }) => {
               currentIndex={currentImage}
               views={carouselViews}
               trackProps={{
-                onViewChange
+                onViewChange,
               }}
               components={{
                 FooterCaption: () => (
