@@ -1,6 +1,8 @@
 import React, { useState, useMemo, useCallback } from 'react'
 import ReactPhotoGallery from 'react-photo-gallery'
 import Carousel, { Modal, ModalGateway } from 'react-images'
+
+import { PhotoWithHoverOverlay } from './PhotoWithHoverOverlay';
 import { FooterCaption } from './FooterCaption'
 import './Gallery.css'
 
@@ -48,6 +50,7 @@ export const Gallery = ({ images = [] }) => {
         photos={galleryImages}
         onClick={openLightbox}
         direction="column"
+        renderImage={PhotoWithHoverOverlay}
       />
       <ModalGateway>
         {viewerIsOpen ? (
